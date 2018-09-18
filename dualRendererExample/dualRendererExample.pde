@@ -1,9 +1,14 @@
 
+// This uses a class called DualRenderer that can draw both on a window and   
+
 void setup() {
+  
   size(500, 500);
 
-  // test
+  // test, create a DualRenderer, the PDF file will be in the root folder 
   DualRenderer dR = new DualRenderer(this, width, height, 2, sketchPath(System.currentTimeMillis() + ".pdf"));
+  
+  // draw a few shapes on it
   dR.beginDraw();
   dR.pushMatrix();
   dR.noStroke();
@@ -16,8 +21,10 @@ void setup() {
   dR.popMatrix();
   dR.endDraw();
   dR.dispose();
-  background(0);
+  
+  // draws on the screen
   image(dR.gra, 0, 0);
+  
 }
 
 void draw() {
