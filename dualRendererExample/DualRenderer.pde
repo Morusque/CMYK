@@ -122,6 +122,14 @@ class DualRenderer {// contains both a cmyk pdf renderer and a rgb onscreen rend
     pdf.vertex(x/pxPP, y/pxPP);
     gra.vertex(x, y);
   }
+  void text(String txt, float x, float y) {
+    pdf.text(txt, x/pxPP, y/pxPP);
+    gra.text(txt, x, y);
+  }
+  void text(String txt, float x, float y, float x2, float y2) {
+    pdf.text(txt, x/pxPP, y/pxPP, x2/pxPP, y2/pxPP);
+    gra.text(txt, x, y, x2, y2);
+  }
   void dispose() {
     pdf.dispose();
   }
