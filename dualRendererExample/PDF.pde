@@ -26,7 +26,7 @@
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  * Boston, MA 02111-1307 USA
  */
-
+ 
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.io.BufferedOutputStream;
@@ -731,7 +731,7 @@ public class PDF extends PGraphicsJava2D {
    * @return true if it's ok
    */
   protected void checkFont() {
-    Font awtFont = (Font) textFont.getNative();
+    java.awt.Font awtFont = (java.awt.Font) textFont.getNative();
     if (awtFont == null) { // always need a native font or reference to it
       throw new RuntimeException("Use createFont() instead of loadFont() " + "when drawing text using the PDF library.");
     } else if (textMode != SHAPE) {

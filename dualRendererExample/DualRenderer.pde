@@ -27,10 +27,12 @@ class DualRenderer {// contains both a cmyk pdf renderer and a rgb onscreen rend
   PDF pdf;
   PGraphics gra;
   float pxPP;
+  PVector size;
   DualRenderer (PApplet p, float wInPixels, float hInPixels, float pixelsPerPoint, String out) {
+    this.size = new PVector(wInPixels, hInPixels);
     this.pxPP = pixelsPerPoint;
     float wPoints = wInPixels/pxPP;
-    float hPoints = wInPixels/pxPP;
+    float hPoints = hInPixels/pxPP;
     pdf = new PDF(p, wPoints, hPoints, out);
     gra = createGraphics(floor(wInPixels), floor(hInPixels), JAVA2D);
   }
@@ -48,12 +50,24 @@ class DualRenderer {// contains both a cmyk pdf renderer and a rgb onscreen rend
     pdf.popMatrix();
     gra.popMatrix();
   }  
+  void translate(float x, float y) {
+    pdf.translate(x, y);
+    gra.translate(x, y);
+  }
+  void rotate(float r) {
+    pdf.rotate(r);
+    gra.rotate(r);
+  }
   void noStroke() {
     pdf.noStroke();
     gra.noStroke();
   }
+  void noFill() {
+    pdf.noFill();
+    gra.noFill();
+  }
   void fill(int k) {
-    pdf.fillK(k);
+    pdf.fillK(0xFF-k);
     gra.fill(k);
   }
   void fill(int r, int g, int b) {
@@ -76,7 +90,7 @@ class DualRenderer {// contains both a cmyk pdf renderer and a rgb onscreen rend
     gra.fill(red(convertedColor), green(convertedColor), blue(convertedColor), a);
   }
   void stroke(int k) {
-    pdf.strokeK(k);
+    pdf.strokeK(0xFF-k);
     gra.stroke(k);
   }
   void stroke(int r, int g, int b) {
@@ -127,8 +141,24 @@ class DualRenderer {// contains both a cmyk pdf renderer and a rgb onscreen rend
     gra.text(txt, x, y);
   }
   void text(String txt, float x, float y, float x2, float y2) {
-    pdf.text(txt, x/pxPP, y/pxPP, x2/pxPP, y2/pxPP);
+    pdf.text(txt, x/pxPP, y/pxPP, x2, y2);// it seemed logical to do x2/pxPP, y2/pxPP but apparently not
     gra.text(txt, x, y, x2, y2);
+  }
+  void textFont(PFont font) {
+    pdf.textFont(font);
+    gra.textFont(font);
+  }
+  void textAlign(int i, int j) {
+    pdf.textAlign(i,j);
+    gra.textAlign(i,j);
+  }
+  void textSize(float f) {
+    pdf.textSize(f/pxPP);
+    gra.textSize(f);
+  }
+  void strokeWeight(float f) {
+    pdf.strokeWeight(f/pxPP);
+    gra.strokeWeight(f);
   }
   void dispose() {
     pdf.dispose();
